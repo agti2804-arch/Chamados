@@ -1,311 +1,375 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Chamados</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<title>Sistema de Chamados</title>
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial,sans-serif;
-    }
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    body{
-      background:#f3f4f6;
-      padding:20px;
-      color:#333;
-    }
+<style>
 
-    .container{
-      max-width:1300px;
-      margin:auto;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
-    .header{
-      text-align:center;
-      margin-bottom:30px;
-    }
+body{
+  background:#f3f4f6;
+  color:#333;
+  padding:20px;
+}
 
-    .header h1{
-      color:#1f3b5b;
-      font-size:38px;
-      margin-bottom:10px;
-    }
+.container{
+  max-width:1300px;
+  margin:auto;
+}
 
-    .header p{
-      color:#666;
-      font-size:18px;
-    }
+.header{
+  text-align:center;
+  margin-bottom:30px;
+}
 
-    .card{
-      background:#fff;
-      padding:25px;
-      border-radius:14px;
-      margin-bottom:25px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.08);
-    }
+.header h1{
+  color:#1f3b5b;
+  font-size:38px;
+  margin-bottom:10px;
+}
 
-    .card h2{
-      margin-bottom:20px;
-      color:#1f3b5b;
-    }
+.header p{
+  color:#666;
+  font-size:18px;
+}
 
-    .form-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:18px;
-    }
+.card{
+  background:white;
+  border-radius:14px;
+  padding:25px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom:25px;
+}
 
-    .form-group{
-      display:flex;
-      flex-direction:column;
-    }
+.card h2{
+  margin-bottom:20px;
+  color:#1f3b5b;
+}
 
-    .form-group label{
-      margin-bottom:8px;
-      font-weight:bold;
-    }
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:18px;
+}
 
-    input,select,textarea{
-      padding:12px;
-      border:1px solid #ccc;
-      border-radius:8px;
-      font-size:15px;
-    }
+.form-group{
+  display:flex;
+  flex-direction:column;
+}
 
-    textarea{
-      min-height:120px;
-      resize:vertical;
-    }
+.form-group label{
+  margin-bottom:8px;
+  font-weight:bold;
+}
 
-    .buttons{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:25px;
-    }
+input,
+select,
+textarea{
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:15px;
+}
 
-    button{
-      border:none;
-      padding:14px 22px;
-      border-radius:10px;
-      color:white;
-      font-weight:bold;
-      cursor:pointer;
-      transition:0.3s;
-    }
+textarea{
+  resize:vertical;
+  min-height:120px;
+}
 
-    button:hover{
-      transform:translateY(-2px);
-      opacity:0.92;
-    }
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:25px;
+}
 
-    .btn-save{background:#2563eb;}
-    .btn-clear{background:#ef4444;}
-    .btn-report{background:#10b981;}
-    .btn-export{background:#8b5cf6;}
+button{
+  border:none;
+  padding:14px 22px;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:bold;
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:20px;
-    }
+button:hover{
+  transform:translateY(-2px);
+  opacity:0.92;
+}
 
-    th{
-      background:#1f3b5b;
-      color:white;
-      padding:14px;
-      text-align:left;
-    }
+.btn-save{
+  background:#2563eb;
+}
 
-    td{
-      background:white;
-      padding:12px;
-      border-bottom:1px solid #ddd;
-    }
+.btn-clear{
+  background:#ef4444;
+}
 
-    tr:hover td{
-      background:#f1f5f9;
-    }
+.btn-report{
+  background:#10b981;
+}
 
-    .status-aberto{
-      color:#dc2626;
-      font-weight:bold;
-    }
+.btn-export{
+  background:#8b5cf6;
+}
 
-    .status-fechado{
-      color:#16a34a;
-      font-weight:bold;
-    }
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+}
 
-    .top-info{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:15px;
-      margin-bottom:25px;
-    }
+th{
+  background:#1f3b5b;
+  color:white;
+  padding:14px;
+  text-align:left;
+}
 
-    .info-box{
-      background:linear-gradient(135deg,#2563eb,#1d4ed8);
-      color:white;
-      padding:20px;
-      border-radius:14px;
-      text-align:center;
-    }
+td{
+  padding:12px;
+  border-bottom:1px solid #ddd;
+  background:white;
+}
 
-    .info-box h3{
-      font-size:30px;
-      margin-bottom:5px;
-    }
+tr:hover td{
+  background:#f1f5f9;
+}
 
-    .table-responsive{
-      overflow-x:auto;
-    }
+.status-aberto{
+  color:#dc2626;
+  font-weight:bold;
+}
 
-    @media(max-width:768px){
-      .header h1{
-        font-size:28px;
-      }
+.status-fechado{
+  color:#16a34a;
+  font-weight:bold;
+}
 
-      button{
-        width:100%;
-      }
-    }
-  </style>
+.top-info{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.info-box{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  padding:20px;
+  border-radius:14px;
+  text-align:center;
+}
+
+.info-box h3{
+  font-size:30px;
+  margin-bottom:5px;
+}
+
+.feedback-box{
+  background:#eff6ff;
+  padding:15px;
+  border-radius:10px;
+}
+
+@media(max-width:768px){
+
+  .header h1{
+    font-size:28px;
+  }
+
+  button{
+    width:100%;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <div class="header">
-    <h1><i class="fa-solid fa-headset"></i> Sistema de Chamados</h1>
-    <p>Sistema Web de Gerenciamento de Suporte Técnico</p>
-  </div>
+<div class="header">
 
-  <div class="top-info">
+<h1>
+<i class="fa-solid fa-headset"></i>
+Sistema de Chamados
+</h1>
 
-    <div class="info-box">
-      <h3 id="totalChamados">0</h3>
-      <p>Total de Chamados</p>
-    </div>
+<p>
+Sistema Web de Gerenciamento de Suporte Técnico
+</p>
 
-    <div class="info-box">
-      <h3 id="abertos">0</h3>
-      <p>Chamados Abertos</p>
-    </div>
+</div>
 
-    <div class="info-box">
-      <h3 id="fechados">0</h3>
-      <p>Chamados Fechados</p>
-    </div>
+<div class="top-info">
 
-  </div>
+<div class="info-box">
+<h3 id="totalChamados">0</h3>
+<p>Total de Chamados</p>
+</div>
 
-  <div class="card">
+<div class="info-box">
+<h3 id="abertos">0</h3>
+<p>Chamados Abertos</p>
+</div>
 
-    <h2><i class="fa-solid fa-plus"></i> Novo Chamado</h2>
+<div class="info-box">
+<h3 id="fechados">0</h3>
+<p>Chamados Fechados</p>
+</div>
 
-    <div class="form-grid">
+</div>
 
-      <div class="form-group">
-        <label>Solicitante</label>
-        <input type="text" id="solicitante" placeholder="Digite o nome">
-      </div>
+<div class="card">
 
-      <div class="form-group">
-        <label>Técnico</label>
-        <input type="text" id="tecnico" placeholder="Digite o técnico">
-      </div>
+<h2>
+<i class="fa-solid fa-plus"></i>
+Novo Chamado
+</h2>
 
-      <div class="form-group">
-        <label>Equipamento</label>
-        <input type="text" id="equipamento" placeholder="Computador, Impressora...">
-      </div>
+<div class="form-grid">
 
-      <div class="form-group">
-        <label>Prioridade</label>
-        <select id="prioridade">
-          <option>Baixa</option>
-          <option selected>Média</option>
-          <option>Alta</option>
-        </select>
-      </div>
+<div class="form-group">
+<label>Solicitante</label>
+<input type="text"
+id="solicitante"
+placeholder="Digite o nome">
+</div>
 
-      <div class="form-group">
-        <label>Status</label>
-        <select id="status">
-          <option selected>Aberto</option>
-          <option>Fechado</option>
-        </select>
-      </div>
+<div class="form-group">
+<label>Técnico</label>
+<input type="text"
+id="tecnico"
+placeholder="Digite o técnico">
+</div>
 
-    </div>
+<div class="form-group">
+<label>Equipamento</label>
+<input type="text"
+id="equipamento"
+placeholder="Computador, Impressora...">
+</div>
 
-    <div class="form-group" style="margin-top:20px;">
-      <label>Problema / Descrição</label>
-      <textarea id="problema"
-      placeholder="Descreva o problema..."></textarea>
-    </div>
+<div class="form-group">
+<label>Prioridade</label>
 
-    <div class="buttons">
+<select id="prioridade">
+<option>Baixa</option>
+<option selected>Média</option>
+<option>Alta</option>
+</select>
+</div>
 
-      <button class="btn-save" onclick="salvarChamado()">
-        <i class="fa-solid fa-floppy-disk"></i> Salvar
-      </button>
+<div class="form-group">
+<label>Status</label>
 
-      <button class="btn-clear" onclick="limparCampos()">
-        <i class="fa-solid fa-trash"></i> Limpar
-      </button>
+<select id="status">
+<option selected>Aberto</option>
+<option>Fechado</option>
+</select>
+</div>
 
-      <button class="btn-report" onclick="gerarRelatorio()">
-        <i class="fa-solid fa-chart-column"></i> Relatório
-      </button>
+</div>
 
-      <button class="btn-export" onclick="exportarExcel()">
-        <i class="fa-solid fa-file-excel"></i> Excel
-      </button>
+<div class="form-group" style="margin-top:20px;">
 
-    </div>
+<label>Problema / Descrição</label>
 
-  </div>
+<textarea
+id="problema"
+placeholder="Descreva o problema..."></textarea>
 
-  <div class="card">
+</div>
 
-    <h2><i class="fa-solid fa-list"></i> Lista de Chamados</h2>
+<div class="buttons">
 
-    <div class="table-responsive">
+<button class="btn-save"
+onclick="window.salvarChamado()">
 
-      <table>
+<i class="fa-solid fa-floppy-disk"></i>
+Salvar
 
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Solicitante</th>
-            <th>Equipamento</th>
-            <th>Problema</th>
-            <th>Técnico</th>
-            <th>Prioridade</th>
-            <th>Data</th>
-            <th>Status</th>
-            <th>Ações</th>
-            <th>Feedback</th>
-          </tr>
-        </thead>
+</button>
 
-        <tbody id="tabelaChamados"></tbody>
+<button class="btn-clear"
+onclick="window.limparCampos()">
 
-      </table>
+<i class="fa-solid fa-trash"></i>
+Limpar
 
-    </div>
+</button>
 
-  </div>
+<button class="btn-report"
+onclick="window.gerarRelatorio()">
+
+<i class="fa-solid fa-chart-column"></i>
+Relatório
+
+</button>
+
+<button class="btn-export"
+onclick="window.exportarExcel()">
+
+<i class="fa-solid fa-file-excel"></i>
+Excel
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>
+<i class="fa-solid fa-list"></i>
+Lista de Chamados
+</h2>
+
+<div style="overflow-x:auto;">
+
+<table>
+
+<thead>
+<tr>
+
+<th>ID</th>
+<th>Solicitante</th>
+<th>Equipamento</th>
+<th>Problema</th>
+<th>Técnico</th>
+<th>Prioridade</th>
+<th>Data</th>
+<th>Status</th>
+<th>Ações</th>
+
+</tr>
+</thead>
+
+<tbody id="tabelaChamados"></tbody>
+
+</table>
+
+</div>
+
+</div>
 
 </div>
 
@@ -325,16 +389,28 @@ import {
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
+
   apiKey: "AIzaSyB1zQcK87lwbmduPeeIFDRX9mNfYtIcPYQ",
-  authDomain: "chamados-19c74.firebaseapp.com",
-  projectId: "chamados-19c74",
-  storageBucket: "chamados-19c74.firebasestorage.app",
-  messagingSenderId: "241002349465",
-  appId: "1:241002349465:web:3558fd79b0043efeac8908",
-  measurementId: "G-VWGKEBZJXK"
+
+  authDomain:
+  "chamados-19c74.firebaseapp.com",
+
+  projectId:
+  "chamados-19c74",
+
+  storageBucket:
+  "chamados-19c74.firebasestorage.app",
+
+  messagingSenderId:
+  "241002349465",
+
+  appId:
+  "1:241002349465:web:3558fd79b0043efeac8908"
+
 };
 
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
 
 let chamados = [];
@@ -349,13 +425,16 @@ async function carregarChamados(){
   querySnapshot.forEach((docItem)=>{
 
     chamados.push({
-      idFirebase: docItem.id,
+
+      idFirebase:docItem.id,
       ...docItem.data()
+
     });
 
   });
 
   atualizarTabela();
+
 }
 
 function atualizarTabela(){
@@ -368,6 +447,7 @@ function atualizarTabela(){
   chamados.forEach((chamado,index)=>{
 
     tabela.innerHTML += `
+
       <tr>
 
         <td>${index + 1}</td>
@@ -402,66 +482,80 @@ function atualizarTabela(){
             ?
 
             `<button
-              onclick="fecharChamado('${chamado.idFirebase}')"
-              style="background:#16a34a;
+              onclick="window.fecharChamado('${chamado.idFirebase}')"
+              style="
+              background:#16a34a;
               padding:8px 12px;
               border:none;
               border-radius:6px;
               color:white;
               font-weight:bold;
               cursor:pointer;">
-
               Fechar
-
             </button>`
 
             :
 
-            "Concluído"
-          }
-
-        </td>
-
-        <td>
-
-          ${
-            chamado.status === "Fechado"
-
-            ?
-
             `<button
-              onclick="responderChamado('${chamado.idFirebase}')"
-              style="background:#2563eb;
+              onclick="window.responderChamado('${chamado.idFirebase}')"
+              style="
+              background:#2563eb;
               padding:8px 12px;
               border:none;
               border-radius:6px;
               color:white;
               font-weight:bold;
               cursor:pointer;">
-
               Responder
-
-            </button>
-
-            <br><br>
-
-            <small>
-              ${chamado.feedback || "Sem feedback"}
-            </small>
-            `
-
-            :
-
-            "-"
+            </button>`
           }
 
         </td>
 
       </tr>
+
+      ${
+        chamado.feedback
+        ?
+
+        `<tr>
+
+          <td colspan="9">
+
+            <div class="feedback-box">
+
+              <b>Resposta:</b>
+
+              <br><br>
+
+              <textarea
+              readonly
+              style="
+              width:100%;
+              min-height:80px;
+              background:#fff;
+              border:1px solid #ccc;
+              border-radius:8px;
+              padding:10px;
+              resize:vertical;">${chamado.feedback}</textarea>
+
+            </div>
+
+          </td>
+
+        </tr>`
+
+        :
+
+        ""
+      }
+
     `;
+
   });
 
   atualizarDashboard();
+
 }
 
 async function salvarChamado(){
@@ -484,10 +578,15 @@ async function salvarChamado(){
   const problema =
   document.getElementById("problema").value;
 
-  if(!solicitante || !equipamento || !problema){
+  if(
+    !solicitante ||
+    !equipamento ||
+    !problema
+  ){
 
     alert("Preencha os campos obrigatórios!");
     return;
+
   }
 
   const chamado = {
@@ -498,8 +597,10 @@ async function salvarChamado(){
     prioridade,
     status,
     problema,
-    feedback:"",
-    data:new Date().toLocaleString("pt-BR")
+
+    data:
+    new Date().toLocaleString("pt-BR")
+
   };
 
   await addDoc(
@@ -512,24 +613,29 @@ async function salvarChamado(){
   carregarChamados();
 
   alert("Chamado salvo com sucesso!");
+
 }
 
 function limparCampos(){
 
-  document.getElementById("solicitante").value="";
-  document.getElementById("tecnico").value="";
-  document.getElementById("equipamento").value="";
-  document.getElementById("problema").value="";
+  document.getElementById("solicitante").value = "";
 
-  document.getElementById("prioridade").value="Média";
+  document.getElementById("tecnico").value = "";
 
-  document.getElementById("status").value="Aberto";
+  document.getElementById("equipamento").value = "";
+
+  document.getElementById("problema").value = "";
+
+  document.getElementById("prioridade").value = "Média";
+
+  document.getElementById("status").value = "Aberto";
+
 }
 
 function atualizarDashboard(){
 
-  document.getElementById("totalChamados")
-  .innerText = chamados.length;
+  document.getElementById("totalChamados").innerText =
+  chamados.length;
 
   const abertos =
   chamados.filter(c=>c.status==="Aberto").length;
@@ -537,11 +643,12 @@ function atualizarDashboard(){
   const fechados =
   chamados.filter(c=>c.status==="Fechado").length;
 
-  document.getElementById("abertos")
-  .innerText = abertos;
+  document.getElementById("abertos").innerText =
+  abertos;
 
-  document.getElementById("fechados")
-  .innerText = fechados;
+  document.getElementById("fechados").innerText =
+  fechados;
+
 }
 
 function gerarRelatorio(){
@@ -555,12 +662,15 @@ function gerarRelatorio(){
   chamados.filter(c=>c.status==="Fechado").length;
 
   alert(
+
 `RELATÓRIO DE CHAMADOS
 
 Total: ${total}
 Abertos: ${abertos}
 Fechados: ${fechados}`
+
   );
+
 }
 
 async function fecharChamado(id){
@@ -569,55 +679,57 @@ async function fecharChamado(id){
   doc(db,"chamados",id);
 
   await updateDoc(chamadoRef,{
+
     status:"Fechado"
+
   });
 
   carregarChamados();
 
   alert("Chamado fechado!");
+
 }
 
 async function responderChamado(id){
 
-  const resposta =
-  prompt("Digite o feedback:");
+  const texto =
+  prompt("Digite a resposta do chamado:");
 
-  if(!resposta) return;
+  if(!texto || texto.trim() === ""){
+    return;
+  }
 
   const chamadoRef =
   doc(db,"chamados",id);
 
   await updateDoc(chamadoRef,{
-    feedback:resposta
+
+    feedback:texto
+
   });
+
+  alert("Resposta salva com sucesso!");
 
   carregarChamados();
 
-  alert("Feedback salvo!");
 }
 
 function exportarExcel(){
 
   if(chamados.length === 0){
 
-    alert("Nenhum chamado.");
+    alert("Nenhum chamado encontrado.");
     return;
+
   }
 
   let csv =
-  "Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Feedback,Data\n";
+  "Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data\n";
 
   chamados.forEach(c=>{
 
     csv +=
-`${c.solicitante},
-${c.tecnico},
-${c.equipamento},
-${c.problema},
-${c.prioridade},
-${c.status},
-${c.feedback},
-${c.data}\n`;
+`${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}\n`;
 
   });
 
@@ -636,6 +748,7 @@ ${c.data}\n`;
   "relatorio_chamados.csv";
 
   link.click();
+
 }
 
 window.salvarChamado = salvarChamado;
