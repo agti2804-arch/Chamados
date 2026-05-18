@@ -291,8 +291,6 @@
 
   </div>
 
-<script>
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
@@ -452,11 +450,11 @@
       return;
     }
 
-    let csv = 'Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data
+let csv = 'Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data\\n';
 ';
 
     chamados.forEach(c => {
-      csv += `${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}
+     csv += `${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}\\n`;
 `;
     });
 
