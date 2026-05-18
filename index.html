@@ -2,11 +2,11 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sistema de Chamados</title>
 
   <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 
   <style>
     *{
@@ -18,8 +18,8 @@
 
     body{
       background:#f3f4f6;
-      color:#333;
       padding:20px;
+      color:#333;
     }
 
     .container{
@@ -44,9 +44,9 @@
     }
 
     .card{
-      background:white;
-      border-radius:14px;
+      background:#fff;
       padding:25px;
+      border-radius:14px;
       box-shadow:0 4px 12px rgba(0,0,0,0.08);
       margin-bottom:25px;
     }
@@ -97,7 +97,7 @@
       border-radius:10px;
       font-size:15px;
       font-weight:bold;
-      color:white;
+      color:#fff;
       cursor:pointer;
       transition:0.3s;
     }
@@ -168,16 +168,6 @@
     .table-responsive{
       overflow-x:auto;
     }
-
-    @media(max-width:768px){
-      .header h1{
-        font-size:28px;
-      }
-
-      button{
-        width:100%;
-      }
-    }
   </style>
 </head>
 
@@ -186,16 +176,11 @@
 <div class="container">
 
   <div class="header">
-    <h1>
-      <i class="fa-solid fa-headset"></i>
-      Sistema de Chamados
-    </h1>
-
+    <h1><i class="fa-solid fa-headset"></i> Sistema de Chamados</h1>
     <p>Sistema Web de Gerenciamento de Suporte Técnico</p>
   </div>
 
   <div class="top-info">
-
     <div class="info-box">
       <h3 id="totalChamados">0</h3>
       <p>Total de Chamados</p>
@@ -210,36 +195,31 @@
       <h3 id="fechados">0</h3>
       <p>Chamados Fechados</p>
     </div>
-
   </div>
 
   <div class="card">
 
-    <h2>
-      <i class="fa-solid fa-plus"></i>
-      Novo Chamado
-    </h2>
+    <h2><i class="fa-solid fa-plus"></i> Novo Chamado</h2>
 
     <div class="form-grid">
 
       <div class="form-group">
         <label>Solicitante</label>
-        <input type="text" id="solicitante" placeholder="Digite o nome">
+        <input type="text" id="solicitante">
       </div>
 
       <div class="form-group">
         <label>Técnico</label>
-        <input type="text" id="tecnico" placeholder="Digite o técnico">
+        <input type="text" id="tecnico">
       </div>
 
       <div class="form-group">
         <label>Equipamento</label>
-        <input type="text" id="equipamento" placeholder="Computador, Impressora...">
+        <input type="text" id="equipamento">
       </div>
 
       <div class="form-group">
         <label>Prioridade</label>
-
         <select id="prioridade">
           <option>Baixa</option>
           <option selected>Média</option>
@@ -249,7 +229,6 @@
 
       <div class="form-group">
         <label>Status</label>
-
         <select id="status">
           <option selected>Aberto</option>
           <option>Fechado</option>
@@ -259,32 +238,26 @@
     </div>
 
     <div class="form-group" style="margin-top:20px;">
-      <label>Problema / Descrição</label>
-
-      <textarea id="problema"
-      placeholder="Descreva o problema..."></textarea>
+      <label>Problema</label>
+      <textarea id="problema"></textarea>
     </div>
 
     <div class="buttons">
 
       <button class="btn-save" onclick="salvarChamado()">
-        <i class="fa-solid fa-floppy-disk"></i>
-        Salvar
+        <i class="fa-solid fa-floppy-disk"></i> Salvar
       </button>
 
       <button class="btn-clear" onclick="limparCampos()">
-        <i class="fa-solid fa-trash"></i>
-        Limpar
+        <i class="fa-solid fa-trash"></i> Limpar
       </button>
 
       <button class="btn-report" onclick="gerarRelatorio()">
-        <i class="fa-solid fa-chart-column"></i>
-        Relatório
+        <i class="fa-solid fa-chart-column"></i> Relatório
       </button>
 
       <button class="btn-export" onclick="exportarExcel()">
-        <i class="fa-solid fa-file-excel"></i>
-        Relatório Excel
+        <i class="fa-solid fa-file-excel"></i> Excel
       </button>
 
     </div>
@@ -293,10 +266,7 @@
 
   <div class="card">
 
-    <h2>
-      <i class="fa-solid fa-list"></i>
-      Lista de Chamados
-    </h2>
+    <h2><i class="fa-solid fa-list"></i> Lista de Chamados</h2>
 
     <div class="table-responsive">
 
@@ -347,8 +317,7 @@ const firebaseConfig = {
   projectId: "chamados-19c74",
   storageBucket: "chamados-19c74.firebasestorage.app",
   messagingSenderId: "241002349465",
-  appId: "1:241002349465:web:3558fd79b0043efeac8908",
-  measurementId: "G-VWGKEBZJXK"
+  appId: "1:241002349465:web:3558fd79b0043efeac8908"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -395,34 +364,31 @@ function atualizarTabela(){
         <td>${chamado.prioridade}</td>
         <td>${chamado.data}</td>
 
-        <td class="${chamado.status === 'Aberto'
-          ? 'status-aberto'
-          : 'status-fechado'}">
-
+        <td class="${
+          chamado.status === "Aberto"
+          ? "status-aberto"
+          : "status-fechado"
+        }">
           ${chamado.status}
-
         </td>
 
         <td>
 
-        ${chamado.status === 'Aberto'
-          ? `
-            <button
-            onclick="fecharChamado('${chamado.idFirebase}')"
-            style="
-            background:#16a34a;
-            padding:8px 12px;
-            border:none;
-            border-radius:6px;
-            color:white;
-            font-weight:bold;
-            cursor:pointer;">
+        ${
+          chamado.status === "Aberto"
 
-            Fechar
+          ?
 
-            </button>
-          `
-          : 'Concluído'}
+          `<button
+          onclick="fecharChamado('${chamado.idFirebase}')"
+          style="background:#16a34a;padding:8px 12px;border:none;border-radius:6px;color:white;font-weight:bold;cursor:pointer;">
+          Fechar
+          </button>`
+
+          :
+
+          "Concluído"
+        }
 
         </td>
 
@@ -461,6 +427,7 @@ async function salvarChamado(){
   }
 
   const chamado = {
+
     solicitante,
     tecnico,
     equipamento,
@@ -470,7 +437,10 @@ async function salvarChamado(){
     data:new Date().toLocaleString("pt-BR")
   };
 
-  await addDoc(collection(db,"chamados"),chamado);
+  await addDoc(
+    collection(db,"chamados"),
+    chamado
+  );
 
   limparCampos();
 
@@ -487,6 +457,7 @@ function limparCampos(){
   document.getElementById("problema").value = "";
 
   document.getElementById("prioridade").value = "Média";
+
   document.getElementById("status").value = "Aberto";
 }
 
@@ -496,10 +467,10 @@ function atualizarDashboard(){
   .innerText = chamados.length;
 
   const abertos =
-  chamados.filter(c=>c.status==="Aberto").length;
+  chamados.filter(c => c.status === "Aberto").length;
 
   const fechados =
-  chamados.filter(c=>c.status==="Fechado").length;
+  chamados.filter(c => c.status === "Fechado").length;
 
   document.getElementById("abertos")
   .innerText = abertos;
@@ -513,16 +484,17 @@ function gerarRelatorio(){
   const total = chamados.length;
 
   const abertos =
-  chamados.filter(c=>c.status==="Aberto").length;
+  chamados.filter(c => c.status === "Aberto").length;
 
   const fechados =
-  chamados.filter(c=>c.status==="Fechado").length;
+  chamados.filter(c => c.status === "Fechado").length;
 
   alert(
-    `RELATÓRIO DE CHAMADOS\n\n` +
-    `Total: ${total}\n` +
-    `Abertos: ${abertos}\n` +
-    `Fechados: ${fechados}`
+`RELATÓRIO DE CHAMADOS
+
+Total: ${total}
+Abertos: ${abertos}
+Fechados: ${fechados}`
   );
 }
 
@@ -544,17 +516,17 @@ function exportarExcel(){
 
   if(chamados.length === 0){
 
-    alert("Nenhum chamado para gerar relatório.");
+    alert("Nenhum chamado.");
     return;
   }
 
   let csv =
-  "Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data\n";
+"Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data\n";
 
   chamados.forEach(c=>{
 
     csv +=
-    `${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}\n`;
+`${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}\n`;
 
   });
 
@@ -566,7 +538,8 @@ function exportarExcel(){
   const link =
   document.createElement("a");
 
-  link.href = URL.createObjectURL(blob);
+  link.href =
+  URL.createObjectURL(blob);
 
   link.download =
   "relatorio_chamados.csv";
