@@ -291,134 +291,193 @@
 
   </div>
 
-  <script>
-    let chamados = JSON.parse(localStorage.getItem('chamados')) || [];
+  # Código para adicionar Firebase no seu sistema
 
-    function atualizarTabela() {
-      const tabela = document.getElementById('tabelaChamados');
-      tabela.innerHTML = '';
+No seu arquivo `index.html`, substitua o bloco:
 
-      chamados.forEach((chamado, index) => {
-        tabela.innerHTML += `
-          <tr>
-            <td>${index + 1}</td>
-            <td>${chamado.solicitante}</td>
-            <td>${chamado.equipamento}</td>
-            <td>${chamado.problema}</td>
-            <td>${chamado.tecnico}</td>
-            <td>${chamado.prioridade}</td>
-            <td>${chamado.data}</td>
-            <td class="${chamado.status === 'Aberto' ? 'status-aberto' : 'status-fechado'}">
-              ${chamado.status}
-            </td>
-            <td>
-              ${chamado.status === 'Aberto' ? `
-                <button onclick="fecharChamado(${index})" style="background:#16a34a;padding:8px 12px;border:none;border-radius:6px;color:white;font-weight:bold;cursor:pointer;">
-                  Fechar
-                </button>
-              ` : 'Concluído'}
-            </td>
-          </tr>
-        `;
+```html
+<script>
+```
+
+por este código abaixo:
+
+```html
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    updateDoc,
+    doc
+  } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB1zQcK87lwbmduPeeIFDRX9mNfYtIcPYQ",
+    authDomain: "chamados-19c74.firebaseapp.com",
+    projectId: "chamados-19c74",
+    storageBucket: "chamados-19c74.firebasestorage.app",
+    messagingSenderId: "241002349465",
+    appId: "1:241002349465:web:3558fd79b0043efeac8908",
+    measurementId: "G-VWGKEBZJXK"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  let chamados = [];
+
+  async function carregarChamados() {
+    chamados = [];
+
+    const querySnapshot = await getDocs(collection(db, "chamados"));
+
+    querySnapshot.forEach((docItem) => {
+      chamados.push({
+        idFirebase: docItem.id,
+        ...docItem.data()
       });
-
-      atualizarDashboard();
-    }
-
-    function salvarChamado() {
-      const solicitante = document.getElementById('solicitante').value;
-      const tecnico = document.getElementById('tecnico').value;
-      const equipamento = document.getElementById('equipamento').value;
-      const prioridade = document.getElementById('prioridade').value;
-      const status = document.getElementById('status').value;
-      const problema = document.getElementById('problema').value;
-
-      if (!solicitante || !equipamento || !problema) {
-        alert('Preencha os campos obrigatórios!');
-        return;
-      }
-
-      const chamado = {
-        solicitante,
-        tecnico,
-        equipamento,
-        prioridade,
-        status,
-        problema,
-        data: new Date().toLocaleString('pt-BR')
-      };
-
-      chamados.push(chamado);
-
-      localStorage.setItem('chamados', JSON.stringify(chamados));
-
-      atualizarTabela();
-      limparCampos();
-
-      alert('Chamado salvo com sucesso!');
-    }
-
-    function limparCampos() {
-      document.getElementById('solicitante').value = '';
-      document.getElementById('tecnico').value = '';
-      document.getElementById('equipamento').value = '';
-      document.getElementById('problema').value = '';
-      document.getElementById('prioridade').value = 'Média';
-      document.getElementById('status').value = 'Aberto';
-    }
-
-    function atualizarDashboard() {
-      document.getElementById('totalChamados').innerText = chamados.length;
-
-      const abertos = chamados.filter(c => c.status === 'Aberto').length;
-      const fechados = chamados.filter(c => c.status === 'Fechado').length;
-
-      document.getElementById('abertos').innerText = abertos;
-      document.getElementById('fechados').innerText = fechados;
-    }
-
-    function gerarRelatorio() {
-      const total = chamados.length;
-      const abertos = chamados.filter(c => c.status === 'Aberto').length;
-      const fechados = chamados.filter(c => c.status === 'Fechado').length;
-
-      alert(
-        `RELATÓRIO DE CHAMADOS\n\n` +
-        `Total: ${total}\n` +
-        `Abertos: ${abertos}\n` +
-        `Fechados: ${fechados}`
-      );
-    }
-
-    function fecharChamado(index) {
-      chamados[index].status = 'Fechado';
-      localStorage.setItem('chamados', JSON.stringify(chamados));
-      atualizarTabela();
-      alert('Chamado fechado com sucesso!');
-    }
-
-    function exportarExcel() {
-      if (chamados.length === 0) {
-        alert('Nenhum chamado para gerar relatório.');
-        return;
-      }
-
-      let csv = 'Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data\n';
-
-      chamados.forEach(c => {
-        csv += `${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}\n`;
-      });
-
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-
-      link.href = URL.createObjectURL(blob);
-      link.download = 'relatorio_chamados.csv';
-      link.click();
-    }
+    });
 
     atualizarTabela();
-  </script>
+  }
+
+  function atualizarTabela() {
+    const tabela = document.getElementById('tabelaChamados');
+    tabela.innerHTML = '';
+
+    chamados.forEach((chamado, index) => {
+      tabela.innerHTML += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${chamado.solicitante}</td>
+          <td>${chamado.equipamento}</td>
+          <td>${chamado.problema}</td>
+          <td>${chamado.tecnico}</td>
+          <td>${chamado.prioridade}</td>
+          <td>${chamado.data}</td>
+          <td class="${chamado.status === 'Aberto' ? 'status-aberto' : 'status-fechado'}">
+            ${chamado.status}
+          </td>
+          <td>
+            ${chamado.status === 'Aberto' ? `
+              <button onclick="fecharChamado('${chamado.idFirebase}')"
+              style="background:#16a34a;padding:8px 12px;border:none;border-radius:6px;color:white;font-weight:bold;cursor:pointer;">
+                Fechar
+              </button>
+            ` : 'Concluído'}
+          </td>
+        </tr>
+      `;
+    });
+
+    atualizarDashboard();
+  }
+
+  async function salvarChamado() {
+    const solicitante = document.getElementById('solicitante').value;
+    const tecnico = document.getElementById('tecnico').value;
+    const equipamento = document.getElementById('equipamento').value;
+    const prioridade = document.getElementById('prioridade').value;
+    const status = document.getElementById('status').value;
+    const problema = document.getElementById('problema').value;
+
+    if (!solicitante || !equipamento || !problema) {
+      alert('Preencha os campos obrigatórios!');
+      return;
+    }
+
+    const chamado = {
+      solicitante,
+      tecnico,
+      equipamento,
+      prioridade,
+      status,
+      problema,
+      data: new Date().toLocaleString('pt-BR')
+    };
+
+    await addDoc(collection(db, "chamados"), chamado);
+
+    limparCampos();
+    carregarChamados();
+
+    alert('Chamado salvo com sucesso!');
+  }
+
+  function limparCampos() {
+    document.getElementById('solicitante').value = '';
+    document.getElementById('tecnico').value = '';
+    document.getElementById('equipamento').value = '';
+    document.getElementById('problema').value = '';
+    document.getElementById('prioridade').value = 'Média';
+    document.getElementById('status').value = 'Aberto';
+  }
+
+  function atualizarDashboard() {
+    document.getElementById('totalChamados').innerText = chamados.length;
+
+    const abertos = chamados.filter(c => c.status === 'Aberto').length;
+    const fechados = chamados.filter(c => c.status === 'Fechado').length;
+
+    document.getElementById('abertos').innerText = abertos;
+    document.getElementById('fechados').innerText = fechados;
+  }
+
+  function gerarRelatorio() {
+    const total = chamados.length;
+    const abertos = chamados.filter(c => c.status === 'Aberto').length;
+    const fechados = chamados.filter(c => c.status === 'Fechado').length;
+
+    alert(
+      `RELATÓRIO DE CHAMADOS\n\n` +
+      `Total: ${total}\n` +
+      `Abertos: ${abertos}\n` +
+      `Fechados: ${fechados}`
+    );
+  }
+
+  async function fecharChamado(id) {
+    const chamadoRef = doc(db, 'chamados', id);
+
+    await updateDoc(chamadoRef, {
+      status: 'Fechado'
+    });
+
+    carregarChamados();
+
+    alert('Chamado fechado com sucesso!');
+  }
+
+  function exportarExcel() {
+    if (chamados.length === 0) {
+      alert('Nenhum chamado para gerar relatório.');
+      return;
+    }
+
+    let csv = 'Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data\n';
+
+    chamados.forEach(c => {
+      csv += `${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}\n`;
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+
+    link.href = URL.createObjectURL(blob);
+    link.download = 'relatorio_chamados.csv';
+    link.click();
+  }
+
+  window.salvarChamado = salvarChamado;
+  window.limparCampos = limparCampos;
+  window.gerarRelatorio = gerarRelatorio;
+  window.exportarExcel = exportarExcel;
+  window.fecharChamado = fecharChamado;
+
+  carregarChamados();
+</script>
 
 </body>
 </html>
