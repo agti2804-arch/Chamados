@@ -4,475 +4,584 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sistema de Chamados</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
     }
 
-    body {
-      background: #f3f4f6;
-      color: #333;
-      padding: 20px;
+    body{
+      background:#f3f4f6;
+      color:#333;
+      padding:20px;
     }
 
-    .container {
-      max-width: 1300px;
-      margin: auto;
+    .container{
+      max-width:1300px;
+      margin:auto;
     }
 
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
+    .header{
+      text-align:center;
+      margin-bottom:30px;
     }
 
-    .header h1 {
-      color: #1f3b5b;
-      font-size: 38px;
-      margin-bottom: 10px;
+    .header h1{
+      color:#1f3b5b;
+      font-size:38px;
+      margin-bottom:10px;
     }
 
-    .header p {
-      color: #666;
-      font-size: 18px;
+    .header p{
+      color:#666;
+      font-size:18px;
     }
 
-    .card {
-      background: white;
-      border-radius: 14px;
-      padding: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      margin-bottom: 25px;
+    .card{
+      background:white;
+      border-radius:14px;
+      padding:25px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      margin-bottom:25px;
     }
 
-    .card h2 {
-      margin-bottom: 20px;
-      color: #1f3b5b;
+    .card h2{
+      margin-bottom:20px;
+      color:#1f3b5b;
     }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 18px;
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:18px;
     }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
+    .form-group{
+      display:flex;
+      flex-direction:column;
     }
 
-    .form-group label {
-      margin-bottom: 8px;
-      font-weight: bold;
+    .form-group label{
+      margin-bottom:8px;
+      font-weight:bold;
     }
 
-    input, select, textarea {
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
+    input,select,textarea{
+      padding:12px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:15px;
     }
 
-    textarea {
-      resize: vertical;
-      min-height: 120px;
+    textarea{
+      resize:vertical;
+      min-height:120px;
     }
 
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 25px;
+    .buttons{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:25px;
     }
 
-    button {
-      border: none;
-      padding: 14px 22px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s;
+    button{
+      border:none;
+      padding:14px 22px;
+      border-radius:10px;
+      font-size:15px;
+      font-weight:bold;
+      color:white;
+      cursor:pointer;
+      transition:0.3s;
     }
 
-    button:hover {
-      transform: translateY(-2px);
-      opacity: 0.92;
+    button:hover{
+      transform:translateY(-2px);
+      opacity:0.92;
     }
 
-    .btn-save { background: #2563eb; }
-    .btn-clear { background: #ef4444; }
-    .btn-report { background: #10b981; }
-    .btn-export { background: #8b5cf6; }
+    .btn-save{background:#2563eb;}
+    .btn-clear{background:#ef4444;}
+    .btn-report{background:#10b981;}
+    .btn-export{background:#8b5cf6;}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      overflow-x: auto;
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:20px;
     }
 
-    th {
-      background: #1f3b5b;
-      color: white;
-      padding: 14px;
-      text-align: left;
+    th{
+      background:#1f3b5b;
+      color:white;
+      padding:14px;
+      text-align:left;
     }
 
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #ddd;
-      background: white;
+    td{
+      padding:12px;
+      border-bottom:1px solid #ddd;
+      background:white;
     }
 
-    tr:hover td {
-      background: #f1f5f9;
+    tr:hover td{
+      background:#f1f5f9;
     }
 
-    .status-aberto {
-      color: #dc2626;
-      font-weight: bold;
+    .status-aberto{
+      color:#dc2626;
+      font-weight:bold;
     }
 
-    .status-fechado {
-      color: #16a34a;
-      font-weight: bold;
+    .status-fechado{
+      color:#16a34a;
+      font-weight:bold;
     }
 
-    .top-info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-bottom: 25px;
+    .top-info{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:15px;
+      margin-bottom:25px;
     }
 
-    .info-box {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: white;
-      padding: 20px;
-      border-radius: 14px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    .info-box{
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
+      color:white;
+      padding:20px;
+      border-radius:14px;
+      text-align:center;
     }
 
-    .info-box h3 {
-      font-size: 30px;
-      margin-bottom: 5px;
+    .info-box h3{
+      font-size:30px;
+      margin-bottom:5px;
     }
 
-    .table-responsive {
-      overflow-x: auto;
+    .table-responsive{
+      overflow-x:auto;
     }
 
-    @media(max-width: 768px) {
-      .header h1 {
-        font-size: 28px;
+    @media(max-width:768px){
+      .header h1{
+        font-size:28px;
       }
 
-      button {
-        width: 100%;
+      button{
+        width:100%;
       }
     }
   </style>
 </head>
+
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="header">
-      <h1><i class="fa-solid fa-headset"></i> Sistema de Chamados</h1>
-      <p>Sistema Web de Gerenciamento de Suporte Técnico</p>
+  <div class="header">
+    <h1>
+      <i class="fa-solid fa-headset"></i>
+      Sistema de Chamados
+    </h1>
+
+    <p>Sistema Web de Gerenciamento de Suporte Técnico</p>
+  </div>
+
+  <div class="top-info">
+
+    <div class="info-box">
+      <h3 id="totalChamados">0</h3>
+      <p>Total de Chamados</p>
     </div>
 
-    <div class="top-info">
-      <div class="info-box">
-        <h3 id="totalChamados">0</h3>
-        <p>Total de Chamados</p>
-      </div>
-
-      <div class="info-box">
-        <h3 id="abertos">0</h3>
-        <p>Chamados Abertos</p>
-      </div>
-
-      <div class="info-box">
-        <h3 id="fechados">0</h3>
-        <p>Chamados Fechados</p>
-      </div>
+    <div class="info-box">
+      <h3 id="abertos">0</h3>
+      <p>Chamados Abertos</p>
     </div>
 
-    <div class="card">
-      <h2><i class="fa-solid fa-plus"></i> Novo Chamado</h2>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Solicitante</label>
-          <input type="text" id="solicitante" placeholder="Digite o nome">
-        </div>
-
-        <div class="form-group">
-          <label>Técnico</label>
-          <input type="text" id="tecnico" placeholder="Digite o técnico">
-        </div>
-
-        <div class="form-group">
-          <label>Equipamento</label>
-          <input type="text" id="equipamento" placeholder="Computador, Impressora...">
-        </div>
-
-        <div class="form-group">
-          <label>Prioridade</label>
-          <select id="prioridade">
-            <option>Baixa</option>
-            <option selected>Média</option>
-            <option>Alta</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Status</label>
-          <select id="status">
-            <option selected>Aberto</option>
-            <option>Fechado</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group" style="margin-top:20px;">
-        <label>Problema / Descrição</label>
-        <textarea id="problema" placeholder="Descreva o problema..."></textarea>
-      </div>
-
-      <div class="buttons">
-        <button class="btn-save" onclick="salvarChamado()">
-          <i class="fa-solid fa-floppy-disk"></i> Salvar
-        </button>
-
-        <button class="btn-clear" onclick="limparCampos()">
-          <i class="fa-solid fa-trash"></i> Limpar
-        </button>
-
-        <button class="btn-report" onclick="gerarRelatorio()">
-          <i class="fa-solid fa-chart-column"></i> Relatório
-        </button>
-
-        <button class="btn-export" onclick="exportarExcel()">
-          <i class="fa-solid fa-file-excel"></i> Relatório Excel
-        </button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2><i class="fa-solid fa-list"></i> Lista de Chamados</h2>
-
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Solicitante</th>
-              <th>Equipamento</th>
-              <th>Problema</th>
-              <th>Técnico</th>
-              <th>Prioridade</th>
-              <th>Data</th>
-              <th>Status</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody id="tabelaChamados"></tbody>
-        </table>
-      </div>
+    <div class="info-box">
+      <h3 id="fechados">0</h3>
+      <p>Chamados Fechados</p>
     </div>
 
   </div>
 
+  <div class="card">
+
+    <h2>
+      <i class="fa-solid fa-plus"></i>
+      Novo Chamado
+    </h2>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Solicitante</label>
+        <input type="text" id="solicitante" placeholder="Digite o nome">
+      </div>
+
+      <div class="form-group">
+        <label>Técnico</label>
+        <input type="text" id="tecnico" placeholder="Digite o técnico">
+      </div>
+
+      <div class="form-group">
+        <label>Equipamento</label>
+        <input type="text" id="equipamento" placeholder="Computador, Impressora...">
+      </div>
+
+      <div class="form-group">
+        <label>Prioridade</label>
+
+        <select id="prioridade">
+          <option>Baixa</option>
+          <option selected>Média</option>
+          <option>Alta</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+
+        <select id="status">
+          <option selected>Aberto</option>
+          <option>Fechado</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-group" style="margin-top:20px;">
+      <label>Problema / Descrição</label>
+
+      <textarea id="problema"
+      placeholder="Descreva o problema..."></textarea>
+    </div>
+
+    <div class="buttons">
+
+      <button class="btn-save" onclick="salvarChamado()">
+        <i class="fa-solid fa-floppy-disk"></i>
+        Salvar
+      </button>
+
+      <button class="btn-clear" onclick="limparCampos()">
+        <i class="fa-solid fa-trash"></i>
+        Limpar
+      </button>
+
+      <button class="btn-report" onclick="gerarRelatorio()">
+        <i class="fa-solid fa-chart-column"></i>
+        Relatório
+      </button>
+
+      <button class="btn-export" onclick="exportarExcel()">
+        <i class="fa-solid fa-file-excel"></i>
+        Relatório Excel
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>
+      <i class="fa-solid fa-list"></i>
+      Lista de Chamados
+    </h2>
+
+    <div class="table-responsive">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Solicitante</th>
+            <th>Equipamento</th>
+            <th>Problema</th>
+            <th>Técnico</th>
+            <th>Prioridade</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody id="tabelaChamados"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    updateDoc,
-    doc
-  } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyB1zQcK87lwbmduPeeIFDRX9mNfYtIcPYQ",
-    authDomain: "chamados-19c74.firebaseapp.com",
-    projectId: "chamados-19c74",
-    storageBucket: "chamados-19c74.firebasestorage.app",
-    messagingSenderId: "241002349465",
-    appId: "1:241002349465:web:3558fd79b0043efeac8908",
-    measurementId: "G-VWGKEBZJXK"
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+  doc
+}
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB1zQcK87lwbmduPeeIFDRX9mNfYtIcPYQ",
+  authDomain: "chamados-19c74.firebaseapp.com",
+  projectId: "chamados-19c74",
+  storageBucket: "chamados-19c74.firebasestorage.app",
+  messagingSenderId: "241002349465",
+  appId: "1:241002349465:web:3558fd79b0043efeac8908",
+  measurementId: "G-VWGKEBZJXK"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let chamados = [];
+
+async function carregarChamados(){
+
+  chamados = [];
+
+  const querySnapshot =
+  await getDocs(collection(db,"chamados"));
+
+  querySnapshot.forEach((docItem)=>{
+
+    chamados.push({
+      idFirebase:docItem.id,
+      ...docItem.data()
+    });
+
+  });
+
+  atualizarTabela();
+}
+
+function atualizarTabela(){
+
+  const tabela =
+  document.getElementById("tabelaChamados");
+
+  tabela.innerHTML = "";
+
+  chamados.forEach((chamado,index)=>{
+
+    tabela.innerHTML += `
+      <tr>
+
+        <td>${index + 1}</td>
+        <td>${chamado.solicitante}</td>
+        <td>${chamado.equipamento}</td>
+        <td>${chamado.problema}</td>
+        <td>${chamado.tecnico}</td>
+        <td>${chamado.prioridade}</td>
+        <td>${chamado.data}</td>
+
+        <td class="${chamado.status === 'Aberto'
+          ? 'status-aberto'
+          : 'status-fechado'}">
+
+          ${chamado.status}
+
+        </td>
+
+        <td>
+
+        ${chamado.status === 'Aberto'
+          ? `
+            <button
+            onclick="fecharChamado('${chamado.idFirebase}')"
+            style="
+            background:#16a34a;
+            padding:8px 12px;
+            border:none;
+            border-radius:6px;
+            color:white;
+            font-weight:bold;
+            cursor:pointer;">
+
+            Fechar
+
+            </button>
+          `
+          : 'Concluído'}
+
+        </td>
+
+      </tr>
+    `;
+
+  });
+
+  atualizarDashboard();
+}
+
+async function salvarChamado(){
+
+  const solicitante =
+  document.getElementById("solicitante").value;
+
+  const tecnico =
+  document.getElementById("tecnico").value;
+
+  const equipamento =
+  document.getElementById("equipamento").value;
+
+  const prioridade =
+  document.getElementById("prioridade").value;
+
+  const status =
+  document.getElementById("status").value;
+
+  const problema =
+  document.getElementById("problema").value;
+
+  if(!solicitante || !equipamento || !problema){
+
+    alert("Preencha os campos obrigatórios!");
+    return;
+  }
+
+  const chamado = {
+    solicitante,
+    tecnico,
+    equipamento,
+    prioridade,
+    status,
+    problema,
+    data:new Date().toLocaleString("pt-BR")
   };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  await addDoc(collection(db,"chamados"),chamado);
 
-  let chamados = [];
-
-  async function carregarChamados() {
-    chamados = [];
-
-    const querySnapshot = await getDocs(collection(db, "chamados"));
-
-    querySnapshot.forEach((docItem) => {
-      chamados.push({
-        idFirebase: docItem.id,
-        ...docItem.data()
-      });
-    });
-
-    atualizarTabela();
-  }
-
-  function atualizarTabela() {
-    const tabela = document.getElementById('tabelaChamados');
-    tabela.innerHTML = '';
-
-    chamados.forEach((chamado, index) => {
-      tabela.innerHTML += `
-        <tr>
-          <td>${index + 1}</td>
-          <td>${chamado.solicitante}</td>
-          <td>${chamado.equipamento}</td>
-          <td>${chamado.problema}</td>
-          <td>${chamado.tecnico}</td>
-          <td>${chamado.prioridade}</td>
-          <td>${chamado.data}</td>
-          <td class="${chamado.status === 'Aberto' ? 'status-aberto' : 'status-fechado'}">
-            ${chamado.status}
-          </td>
-          <td>
-            ${chamado.status === 'Aberto' ?
-              `<button onclick="fecharChamado('${chamado.idFirebase}')"
-              style="background:#16a34a;padding:8px 12px;border:none;border-radius:6px;color:white;font-weight:bold;cursor:pointer;">
-              Fechar
-              </button>`
-              : 'Concluído'}
-          </td>
-        </tr>
-      `;
-    });
-
-    atualizarDashboard();
-  }
-
-  async function salvarChamado() {
-    const solicitante = document.getElementById('solicitante').value;
-    const tecnico = document.getElementById('tecnico').value;
-    const equipamento = document.getElementById('equipamento').value;
-    const prioridade = document.getElementById('prioridade').value;
-    const status = document.getElementById('status').value;
-    const problema = document.getElementById('problema').value;
-
-    if (!solicitante || !equipamento || !problema) {
-      alert('Preencha os campos obrigatórios!');
-      return;
-    }
-
-    const chamado = {
-      solicitante,
-      tecnico,
-      equipamento,
-      prioridade,
-      status,
-      problema,
-      data: new Date().toLocaleString('pt-BR')
-    };
-
-    await addDoc(collection(db, "chamados"), chamado);
-
-    limparCampos();
-    carregarChamados();
-
-    alert('Chamado salvo com sucesso!');
-  }
-
-  function limparCampos() {
-    document.getElementById('solicitante').value = '';
-    document.getElementById('tecnico').value = '';
-    document.getElementById('equipamento').value = '';
-    document.getElementById('problema').value = '';
-    document.getElementById('prioridade').value = 'Média';
-    document.getElementById('status').value = 'Aberto';
-  }
-
-  function atualizarDashboard() {
-    document.getElementById('totalChamados').innerText = chamados.length;
-
-    const abertos = chamados.filter(c => c.status === 'Aberto').length;
-    const fechados = chamados.filter(c => c.status === 'Fechado').length;
-
-    document.getElementById('abertos').innerText = abertos;
-    document.getElementById('fechados').innerText = fechados;
-  }
-
-  function gerarRelatorio() {
-    const total = chamados.length;
-    const abertos = chamados.filter(c => c.status === 'Aberto').length;
-    const fechados = chamados.filter(c => c.status === 'Fechado').length;
-
-    alert(
-      `RELATÓRIO DE CHAMADOS
-
-` +
-      `Total: ${total}
-` +
-      `Abertos: ${abertos}
-` +
-      `Fechados: ${fechados}`
-    );
-  }
-
-  async function fecharChamado(id) {
-    const chamadoRef = doc(db, 'chamados', id);
-
-    await updateDoc(chamadoRef, {
-      status: 'Fechado'
-    });
-
-    carregarChamados();
-
-    alert('Chamado fechado com sucesso!');
-  }
-
-  function exportarExcel() {
-    if (chamados.length === 0) {
-      alert('Nenhum chamado para gerar relatório.');
-      return;
-    }
-
-let csv = 'Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data\\n';
-';
-
-    chamados.forEach(c => {
-     csv += `${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}\\n`;
-`;
-    });
-
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-
-    link.href = URL.createObjectURL(blob);
-    link.download = 'relatorio_chamados.csv';
-    link.click();
-  }
-
-  window.salvarChamado = salvarChamado;
-  window.limparCampos = limparCampos;
-  window.gerarRelatorio = gerarRelatorio;
-  window.exportarExcel = exportarExcel;
-  window.fecharChamado = fecharChamado;
+  limparCampos();
 
   carregarChamados();
+
+  alert("Chamado salvo com sucesso!");
+}
+
+function limparCampos(){
+
+  document.getElementById("solicitante").value = "";
+  document.getElementById("tecnico").value = "";
+  document.getElementById("equipamento").value = "";
+  document.getElementById("problema").value = "";
+
+  document.getElementById("prioridade").value = "Média";
+  document.getElementById("status").value = "Aberto";
+}
+
+function atualizarDashboard(){
+
+  document.getElementById("totalChamados")
+  .innerText = chamados.length;
+
+  const abertos =
+  chamados.filter(c=>c.status==="Aberto").length;
+
+  const fechados =
+  chamados.filter(c=>c.status==="Fechado").length;
+
+  document.getElementById("abertos")
+  .innerText = abertos;
+
+  document.getElementById("fechados")
+  .innerText = fechados;
+}
+
+function gerarRelatorio(){
+
+  const total = chamados.length;
+
+  const abertos =
+  chamados.filter(c=>c.status==="Aberto").length;
+
+  const fechados =
+  chamados.filter(c=>c.status==="Fechado").length;
+
+  alert(
+    `RELATÓRIO DE CHAMADOS\n\n` +
+    `Total: ${total}\n` +
+    `Abertos: ${abertos}\n` +
+    `Fechados: ${fechados}`
+  );
+}
+
+async function fecharChamado(id){
+
+  const chamadoRef =
+  doc(db,"chamados",id);
+
+  await updateDoc(chamadoRef,{
+    status:"Fechado"
+  });
+
+  carregarChamados();
+
+  alert("Chamado fechado com sucesso!");
+}
+
+function exportarExcel(){
+
+  if(chamados.length === 0){
+
+    alert("Nenhum chamado para gerar relatório.");
+    return;
+  }
+
+  let csv =
+  "Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data\n";
+
+  chamados.forEach(c=>{
+
+    csv +=
+    `${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}\n`;
+
+  });
+
+  const blob =
+  new Blob([csv],{
+    type:"text/csv;charset=utf-8;"
+  });
+
+  const link =
+  document.createElement("a");
+
+  link.href = URL.createObjectURL(blob);
+
+  link.download =
+  "relatorio_chamados.csv";
+
+  link.click();
+}
+
+window.salvarChamado = salvarChamado;
+window.limparCampos = limparCampos;
+window.gerarRelatorio = gerarRelatorio;
+window.exportarExcel = exportarExcel;
+window.fecharChamado = fecharChamado;
+
+carregarChamados();
+
 </script>
 
 </body>
