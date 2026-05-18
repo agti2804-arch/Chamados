@@ -291,19 +291,11 @@
 
   </div>
 
-  # Código para adicionar Firebase no seu sistema
-
-No seu arquivo `index.html`, substitua o bloco:
-
-```html
 <script>
-```
 
-por este código abaixo:
-
-```html
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
   import {
     getFirestore,
     collection,
@@ -361,12 +353,12 @@ por este código abaixo:
             ${chamado.status}
           </td>
           <td>
-            ${chamado.status === 'Aberto' ? `
-              <button onclick="fecharChamado('${chamado.idFirebase}')"
+            ${chamado.status === 'Aberto' ?
+              `<button onclick="fecharChamado('${chamado.idFirebase}')"
               style="background:#16a34a;padding:8px 12px;border:none;border-radius:6px;color:white;font-weight:bold;cursor:pointer;">
-                Fechar
-              </button>
-            ` : 'Concluído'}
+              Fechar
+              </button>`
+              : 'Concluído'}
           </td>
         </tr>
       `;
@@ -431,9 +423,13 @@ por este código abaixo:
     const fechados = chamados.filter(c => c.status === 'Fechado').length;
 
     alert(
-      `RELATÓRIO DE CHAMADOS\n\n` +
-      `Total: ${total}\n` +
-      `Abertos: ${abertos}\n` +
+      `RELATÓRIO DE CHAMADOS
+
+` +
+      `Total: ${total}
+` +
+      `Abertos: ${abertos}
+` +
       `Fechados: ${fechados}`
     );
   }
@@ -456,10 +452,12 @@ por este código abaixo:
       return;
     }
 
-    let csv = 'Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data\n';
+    let csv = 'Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data
+';
 
     chamados.forEach(c => {
-      csv += `${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}\n`;
+      csv += `${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}
+`;
     });
 
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
