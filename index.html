@@ -9,7 +9,6 @@
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <style>
-
     *{
       margin:0;
       padding:0;
@@ -19,8 +18,8 @@
 
     body{
       background:#f3f4f6;
-      color:#333;
       padding:20px;
+      color:#333;
     }
 
     .container{
@@ -46,10 +45,10 @@
 
     .card{
       background:#fff;
-      border-radius:14px;
       padding:25px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      border-radius:14px;
       margin-bottom:25px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
     }
 
     .card h2{
@@ -81,14 +80,14 @@
     }
 
     textarea{
-      resize:vertical;
       min-height:120px;
+      resize:vertical;
     }
 
     .buttons{
       display:flex;
-      flex-wrap:wrap;
       gap:12px;
+      flex-wrap:wrap;
       margin-top:25px;
     }
 
@@ -96,9 +95,8 @@
       border:none;
       padding:14px 22px;
       border-radius:10px;
-      font-size:15px;
-      font-weight:bold;
       color:white;
+      font-weight:bold;
       cursor:pointer;
       transition:0.3s;
     }
@@ -127,9 +125,9 @@
     }
 
     td{
+      background:white;
       padding:12px;
       border-bottom:1px solid #ddd;
-      background:white;
     }
 
     tr:hover td{
@@ -170,6 +168,15 @@
       overflow-x:auto;
     }
 
+    @media(max-width:768px){
+      .header h1{
+        font-size:28px;
+      }
+
+      button{
+        width:100%;
+      }
+    }
   </style>
 </head>
 
@@ -178,11 +185,7 @@
 <div class="container">
 
   <div class="header">
-    <h1>
-      <i class="fa-solid fa-headset"></i>
-      Sistema de Chamados
-    </h1>
-
+    <h1><i class="fa-solid fa-headset"></i> Sistema de Chamados</h1>
     <p>Sistema Web de Gerenciamento de Suporte Técnico</p>
   </div>
 
@@ -207,31 +210,27 @@
 
   <div class="card">
 
-    <h2>
-      <i class="fa-solid fa-plus"></i>
-      Novo Chamado
-    </h2>
+    <h2><i class="fa-solid fa-plus"></i> Novo Chamado</h2>
 
     <div class="form-grid">
 
       <div class="form-group">
         <label>Solicitante</label>
-        <input type="text" id="solicitante">
+        <input type="text" id="solicitante" placeholder="Digite o nome">
       </div>
 
       <div class="form-group">
         <label>Técnico</label>
-        <input type="text" id="tecnico">
+        <input type="text" id="tecnico" placeholder="Digite o técnico">
       </div>
 
       <div class="form-group">
         <label>Equipamento</label>
-        <input type="text" id="equipamento">
+        <input type="text" id="equipamento" placeholder="Computador, Impressora...">
       </div>
 
       <div class="form-group">
         <label>Prioridade</label>
-
         <select id="prioridade">
           <option>Baixa</option>
           <option selected>Média</option>
@@ -241,7 +240,6 @@
 
       <div class="form-group">
         <label>Status</label>
-
         <select id="status">
           <option selected>Aberto</option>
           <option>Fechado</option>
@@ -252,30 +250,26 @@
 
     <div class="form-group" style="margin-top:20px;">
       <label>Problema / Descrição</label>
-
-      <textarea id="problema"></textarea>
+      <textarea id="problema"
+      placeholder="Descreva o problema..."></textarea>
     </div>
 
     <div class="buttons">
 
       <button class="btn-save" onclick="salvarChamado()">
-        <i class="fa-solid fa-floppy-disk"></i>
-        Salvar
+        <i class="fa-solid fa-floppy-disk"></i> Salvar
       </button>
 
       <button class="btn-clear" onclick="limparCampos()">
-        <i class="fa-solid fa-trash"></i>
-        Limpar
+        <i class="fa-solid fa-trash"></i> Limpar
       </button>
 
       <button class="btn-report" onclick="gerarRelatorio()">
-        <i class="fa-solid fa-chart-column"></i>
-        Relatório
+        <i class="fa-solid fa-chart-column"></i> Relatório
       </button>
 
       <button class="btn-export" onclick="exportarExcel()">
-        <i class="fa-solid fa-file-excel"></i>
-        Excel
+        <i class="fa-solid fa-file-excel"></i> Excel
       </button>
 
     </div>
@@ -284,17 +278,13 @@
 
   <div class="card">
 
-    <h2>
-      <i class="fa-solid fa-list"></i>
-      Lista de Chamados
-    </h2>
+    <h2><i class="fa-solid fa-list"></i> Lista de Chamados</h2>
 
     <div class="table-responsive">
 
       <table>
 
         <thead>
-
           <tr>
             <th>ID</th>
             <th>Solicitante</th>
@@ -305,8 +295,8 @@
             <th>Data</th>
             <th>Status</th>
             <th>Ações</th>
+            <th>Feedback</th>
           </tr>
-
         </thead>
 
         <tbody id="tabelaChamados"></tbody>
@@ -335,18 +325,16 @@ import {
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
-
   apiKey: "AIzaSyB1zQcK87lwbmduPeeIFDRX9mNfYtIcPYQ",
   authDomain: "chamados-19c74.firebaseapp.com",
   projectId: "chamados-19c74",
   storageBucket: "chamados-19c74.firebasestorage.app",
   messagingSenderId: "241002349465",
-  appId: "1:241002349465:web:3558fd79b0043efeac8908"
-
+  appId: "1:241002349465:web:3558fd79b0043efeac8908",
+  measurementId: "G-VWGKEBZJXK"
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
 let chamados = [];
@@ -361,7 +349,7 @@ async function carregarChamados(){
   querySnapshot.forEach((docItem)=>{
 
     chamados.push({
-      idFirebase:docItem.id,
+      idFirebase: docItem.id,
       ...docItem.data()
     });
 
@@ -383,11 +371,17 @@ function atualizarTabela(){
       <tr>
 
         <td>${index + 1}</td>
+
         <td>${chamado.solicitante}</td>
+
         <td>${chamado.equipamento}</td>
+
         <td>${chamado.problema}</td>
+
         <td>${chamado.tecnico}</td>
+
         <td>${chamado.prioridade}</td>
+
         <td>${chamado.data}</td>
 
         <td class="${
@@ -402,27 +396,69 @@ function atualizarTabela(){
 
         <td>
 
-        ${
-          chamado.status === "Aberto"
+          ${
+            chamado.status === "Aberto"
 
-          ?
+            ?
 
-          `<button
-            onclick="fecharChamado('${chamado.idFirebase}')"
-            style="background:#16a34a;padding:8px 12px;border:none;border-radius:6px;color:white;font-weight:bold;cursor:pointer;">
-            Fechar
-          </button>`
+            `<button
+              onclick="fecharChamado('${chamado.idFirebase}')"
+              style="background:#16a34a;
+              padding:8px 12px;
+              border:none;
+              border-radius:6px;
+              color:white;
+              font-weight:bold;
+              cursor:pointer;">
 
-          :
+              Fechar
 
-          "Concluído"
-        }
+            </button>`
+
+            :
+
+            "Concluído"
+          }
+
+        </td>
+
+        <td>
+
+          ${
+            chamado.status === "Fechado"
+
+            ?
+
+            `<button
+              onclick="responderChamado('${chamado.idFirebase}')"
+              style="background:#2563eb;
+              padding:8px 12px;
+              border:none;
+              border-radius:6px;
+              color:white;
+              font-weight:bold;
+              cursor:pointer;">
+
+              Responder
+
+            </button>
+
+            <br><br>
+
+            <small>
+              ${chamado.feedback || "Sem feedback"}
+            </small>
+            `
+
+            :
+
+            "-"
+          }
 
         </td>
 
       </tr>
     `;
-
   });
 
   atualizarDashboard();
@@ -462,8 +498,8 @@ async function salvarChamado(){
     prioridade,
     status,
     problema,
+    feedback:"",
     data:new Date().toLocaleString("pt-BR")
-
   };
 
   await addDoc(
@@ -480,14 +516,14 @@ async function salvarChamado(){
 
 function limparCampos(){
 
-  document.getElementById("solicitante").value = "";
-  document.getElementById("tecnico").value = "";
-  document.getElementById("equipamento").value = "";
-  document.getElementById("problema").value = "";
+  document.getElementById("solicitante").value="";
+  document.getElementById("tecnico").value="";
+  document.getElementById("equipamento").value="";
+  document.getElementById("problema").value="";
 
-  document.getElementById("prioridade").value = "Média";
+  document.getElementById("prioridade").value="Média";
 
-  document.getElementById("status").value = "Aberto";
+  document.getElementById("status").value="Aberto";
 }
 
 function atualizarDashboard(){
@@ -496,10 +532,10 @@ function atualizarDashboard(){
   .innerText = chamados.length;
 
   const abertos =
-  chamados.filter(c => c.status === "Aberto").length;
+  chamados.filter(c=>c.status==="Aberto").length;
 
   const fechados =
-  chamados.filter(c => c.status === "Fechado").length;
+  chamados.filter(c=>c.status==="Fechado").length;
 
   document.getElementById("abertos")
   .innerText = abertos;
@@ -513,10 +549,10 @@ function gerarRelatorio(){
   const total = chamados.length;
 
   const abertos =
-  chamados.filter(c => c.status === "Aberto").length;
+  chamados.filter(c=>c.status==="Aberto").length;
 
   const fechados =
-  chamados.filter(c => c.status === "Fechado").length;
+  chamados.filter(c=>c.status==="Fechado").length;
 
   alert(
 `RELATÓRIO DE CHAMADOS
@@ -538,7 +574,26 @@ async function fecharChamado(id){
 
   carregarChamados();
 
-  alert("Chamado fechado com sucesso!");
+  alert("Chamado fechado!");
+}
+
+async function responderChamado(id){
+
+  const resposta =
+  prompt("Digite o feedback:");
+
+  if(!resposta) return;
+
+  const chamadoRef =
+  doc(db,"chamados",id);
+
+  await updateDoc(chamadoRef,{
+    feedback:resposta
+  });
+
+  carregarChamados();
+
+  alert("Feedback salvo!");
 }
 
 function exportarExcel(){
@@ -550,12 +605,19 @@ function exportarExcel(){
   }
 
   let csv =
-"Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Data\n";
+  "Solicitante,Técnico,Equipamento,Problema,Prioridade,Status,Feedback,Data\n";
 
   chamados.forEach(c=>{
 
     csv +=
-`${c.solicitante},${c.tecnico},${c.equipamento},${c.problema},${c.prioridade},${c.status},${c.data}\n`;
+`${c.solicitante},
+${c.tecnico},
+${c.equipamento},
+${c.problema},
+${c.prioridade},
+${c.status},
+${c.feedback},
+${c.data}\n`;
 
   });
 
@@ -581,6 +643,7 @@ window.limparCampos = limparCampos;
 window.gerarRelatorio = gerarRelatorio;
 window.exportarExcel = exportarExcel;
 window.fecharChamado = fecharChamado;
+window.responderChamado = responderChamado;
 
 carregarChamados();
 
