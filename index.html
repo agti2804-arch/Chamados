@@ -186,6 +186,53 @@ tr:hover td{
   border-radius:10px;
 }
 
+.btn-edit{
+  background:#f59e0b;
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  margin-right:5px;
+}
+
+.btn-delete{
+  background:#ef4444;
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-fechar{
+  background:#16a34a;
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-responder{
+  background:#2563eb;
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.acao-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+
 @media(max-width:768px){
 
   .header h1{
@@ -194,6 +241,10 @@ tr:hover td{
 
   button{
     width:100%;
+  }
+
+  .acao-group button{
+    width:auto;
   }
 
 }
@@ -241,7 +292,7 @@ Sistema Web de Gerenciamento de Suporte Técnico
 
 <h2>
 <i class="fa-solid fa-plus"></i>
-Novo Chamado
+<span id="formTitle">Novo Chamado</span>
 </h2>
 
 <div class="form-grid">
@@ -304,7 +355,7 @@ placeholder="Descreva o problema..."></textarea>
 onclick="window.salvarChamado()">
 
 <i class="fa-solid fa-floppy-disk"></i>
-Salvar
+<span id="btnSaveText">Salvar</span>
 
 </button>
 
@@ -384,6 +435,7 @@ import {
   addDoc,
   getDocs,
   updateDoc,
+  deleteDoc,
   doc
 }
 from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
@@ -414,6 +466,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let chamados = [];
+let editandoId = null;
 
 async function carregarChamados(){
 
@@ -476,39 +529,37 @@ function atualizarTabela(){
 
         <td>
 
-          ${
-            chamado.status === "Aberto"
+          <div class="acao-group">
 
-            ?
+            <button
+              class="btn-edit"
+              onclick="window.editarChamado('${chamado.idFirebase}')">
+              <i class="fa-solid fa-pen"></i>
+            </button>
 
-            `<button
-              onclick="window.fecharChamado('${chamado.idFirebase}')"
-              style="
-              background:#16a34a;
-              padding:8px 12px;
-              border:none;
-              border-radius:6px;
-              color:white;
-              font-weight:bold;
-              cursor:pointer;">
-              Fechar
-            </button>`
+            ${
+              chamado.status === "Aberto"
+              ?
+              `<button
+                class="btn-fechar"
+                onclick="window.fecharChamado('${chamado.idFirebase}')">
+                <i class="fa-solid fa-check"></i>
+              </button>`
+              :
+              `<button
+                class="btn-responder"
+                onclick="window.responderChamado('${chamado.idFirebase}')">
+                <i class="fa-solid fa-reply"></i>
+              </button>`
+            }
 
-            :
+            <button
+              class="btn-delete"
+              onclick="window.excluirChamado('${chamado.idFirebase}')">
+              <i class="fa-solid fa-trash"></i>
+            </button>
 
-            `<button
-              onclick="window.responderChamado('${chamado.idFirebase}')"
-              style="
-              background:#2563eb;
-              padding:8px 12px;
-              border:none;
-              border-radius:6px;
-              color:white;
-              font-weight:bold;
-              cursor:pointer;">
-              Responder
-            </button>`
-          }
+          </div>
 
         </td>
 
@@ -603,16 +654,25 @@ async function salvarChamado(){
 
   };
 
-  await addDoc(
-    collection(db,"chamados"),
-    chamado
-  );
+  if(editandoId){
+
+    const chamadoRef = doc(db,"chamados",editandoId);
+    await updateDoc(chamadoRef, chamado);
+    editandoId = null;
+    document.getElementById("formTitle").textContent = "Novo Chamado";
+    document.getElementById("btnSaveText").textContent = "Salvar";
+
+  }else{
+
+    await addDoc(collection(db,"chamados"), chamado);
+
+  }
 
   limparCampos();
 
   carregarChamados();
 
-  alert("Chamado salvo com sucesso!");
+  alert(editandoId ? "Chamado atualizado com sucesso!" : "Chamado salvo com sucesso!");
 
 }
 
@@ -629,6 +689,10 @@ function limparCampos(){
   document.getElementById("prioridade").value = "Média";
 
   document.getElementById("status").value = "Aberto";
+
+  editandoId = null;
+  document.getElementById("formTitle").textContent = "Novo Chamado";
+  document.getElementById("btnSaveText").textContent = "Salvar";
 
 }
 
@@ -673,7 +737,35 @@ Fechados: ${fechados}`
 
 }
 
+async function editarChamado(id){
+
+  const chamado = chamados.find(c => c.idFirebase === id);
+
+  if(!chamado){
+    alert("Chamado não encontrado!");
+    return;
+  }
+
+  document.getElementById("solicitante").value = chamado.solicitante || "";
+  document.getElementById("tecnico").value = chamado.tecnico || "";
+  document.getElementById("equipamento").value = chamado.equipamento || "";
+  document.getElementById("problema").value = chamado.problema || "";
+  document.getElementById("prioridade").value = chamado.prioridade || "Média";
+  document.getElementById("status").value = chamado.status || "Aberto";
+
+  editandoId = id;
+  document.getElementById("formTitle").textContent = "Editar Chamado";
+  document.getElementById("btnSaveText").textContent = "Atualizar";
+
+  document.getElementById("solicitante").focus();
+
+}
+
 async function fecharChamado(id){
+
+  if(!confirm("Deseja realmente fechar este chamado?")){
+    return;
+  }
 
   const chamadoRef =
   doc(db,"chamados",id);
@@ -711,6 +803,32 @@ async function responderChamado(id){
   alert("Resposta salva com sucesso!");
 
   carregarChamados();
+
+}
+
+async function excluirChamado(id){
+
+  if(!confirm("Deseja realmente excluir este chamado? Esta ação não pode ser desfeita.")){
+    return;
+  }
+
+  try{
+
+    const chamadoRef = doc(db,"chamados",id);
+    await deleteDoc(chamadoRef);
+
+    if(editandoId === id){
+      limparCampos();
+    }
+
+    carregarChamados();
+    alert("Chamado excluído com sucesso!");
+
+  }catch(error){
+
+    alert("Erro ao excluir chamado: " + error.message);
+
+  }
 
 }
 
@@ -755,8 +873,10 @@ window.salvarChamado = salvarChamado;
 window.limparCampos = limparCampos;
 window.gerarRelatorio = gerarRelatorio;
 window.exportarExcel = exportarExcel;
+window.editarChamado = editarChamado;
 window.fecharChamado = fecharChamado;
 window.responderChamado = responderChamado;
+window.excluirChamado = excluirChamado;
 
 carregarChamados();
 
