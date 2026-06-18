@@ -1,3 +1,4 @@
+Sistema de Chamados com Editar e Excluir
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -763,4 +764,262 @@ carregarChamados();
 </script>
 
 </body>
-</html>
+</html>      adicionar um botão de editar e outro botão excluir chamado e gravar tudo completo em html
+Aqui está o HTML completo do sistema de chamados com os botões de editar e excluir adicionados:
+
+html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sistema de Chamados</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f3f4f6;
+  color:#333;
+  padding:20px;
+}
+
+.container{
+  max-width:1300px;
+  margin:auto;
+}
+
+.header{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.header h1{
+  color:#1f3b5b;
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.header p{
+  color:#666;
+  font-size:18px;
+}
+
+.card{
+  background:white;
+  border-radius:14px;
+  padding:25px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom:25px;
+}
+
+.card h2{
+  margin-bottom:20px;
+  color:#1f3b5b;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:18px;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+}
+
+.form-group label{
+  margin-bottom:8px;
+  font-weight:bold;
+}
+
+input,
+select,
+textarea{
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:15px;
+}
+
+textarea{
+  resize:vertical;
+  min-height:120px;
+}
+
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:25px;
+}
+
+button{
+  border:none;
+  padding:14px 22px;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:bold;
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  opacity:0.92;
+}
+
+.btn-save{
+  background:#2563eb;
+}
+
+.btn-clear{
+  background:#ef4444;
+}
+
+.btn-report{
+  background:#10b981;
+}
+
+.btn-export{
+  background:#8b5cf6;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+}
+
+th{
+  background:#1f3b5b;
+  color:white;
+  padding:14px;
+  text-align:left;
+}
+
+td{
+  padding:12px;
+  border-bottom:1px solid #ddd;
+  background:white;
+}
+
+tr:hover td{
+  background:#f1f5f9;
+}
+
+.status-aberto{
+  color:#dc2626;
+  font-weight:bold;
+}
+
+.status-fechado{
+  color:#16a34a;
+  font-weight:bold;
+}
+
+.top-info{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.info-box{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  padding:20px;
+  border-radius:14px;
+  text-align:center;
+}
+
+.info-box h3{
+  font-size:30px;
+  margin-bottom:5px;
+}
+
+.feedback-box{
+  background:#eff6ff;
+  padding:15px;
+  border-radius:10px;
+}
+
+.btn-edit{
+  background:#f59e0b;
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  margin-right:5px;
+}
+
+.btn-delete{
+  background:#ef4444;
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-fechar{
+  background:#16a34a;
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.btn-responder{
+  background:#2563eb;
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.acao-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+
+@media(max-width:768px){
+
+  .header h1{
+    font-size:28px;
+  }
+
+  button{
+    width:100%;
+  }
+
+  .acao-group button{
+    width:auto;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
